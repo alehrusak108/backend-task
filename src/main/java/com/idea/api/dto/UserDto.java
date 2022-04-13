@@ -2,11 +2,11 @@ package com.idea.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class IdeaImageUploadResult {
+@RequiredArgsConstructor
+public class UserDto {
 
 }

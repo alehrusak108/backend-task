@@ -20,7 +20,7 @@ public interface IdeaRepository extends JpaRepository<IdeaEntity, Long> {
                 .orElseThrow(() -> new EntityNotFoundException("Could not find Idea for ID: " + ideaId));
     }
 
-    Page<IdeaEntity> findByCategoryLikeOrderByUpdatedAtDesc(String category, Pageable pageable);
+    Page<IdeaEntity> findByCategoryContainsIgnoreCaseOrderByUpdatedAtDesc(String category, Pageable pageable);
 
     @Modifying
     @Transactional

@@ -12,5 +12,6 @@ public class IdeaLikeDto {
 
     private Long ideaId;
     private Long userId;
+    private String userPhotoUrl;
     private LocalDateTime createdAt;
 }

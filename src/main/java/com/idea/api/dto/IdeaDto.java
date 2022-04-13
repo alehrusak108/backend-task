@@ -1,7 +1,5 @@
 package com.idea.api.dto;
 
-
-import com.idea.api.model.IdeaLikeEntity;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;

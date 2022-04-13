@@ -1,4 +1,4 @@
-package com.idea.api.web.util;
+package com.idea.api.util;
 
 import com.idea.api.exception.MultipartFileIOException;
 import java.io.IOException;

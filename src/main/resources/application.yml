@@ -21,6 +21,9 @@ spring:
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
     show-sql: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 server:
   port: 8080
@@ -32,3 +35,12 @@ management:
   endpoint.prometheus.enabled: true
   metrics.export.prometheus.enabled: true
   metrics.distribution.percentiles-histogram.http: true
+
+# Stub configuration for AWS: need to create an account to run this configuration
+amazon:
+  serverURL: 'https://s3.eu-central-1.amazonaws.com'
+  awsAccessKeyId: some_access_key_id
+  awsSecretKey: some_secret_key
+  folder: ideas_folder
+  bucket: ideas
+  region: eu-central-1

@@ -16,17 +16,18 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.List;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
-public class SwaggerConfig {
+public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
             .genericModelSubstitutes(genericModelSubstitutes())
             .apiInfo(apiInfo())
-            .securityContexts(List.of(securityContext()))
-            .securitySchemes(List.of(apiKey()))
+//            .securityContexts(List.of(securityContext()))
+//            .securitySchemes(List.of(apiKey()))
             .select()
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.any())
@@ -50,13 +51,13 @@ public class SwaggerConfig {
         );
     }
 
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-    }
+//    private ApiKey apiKey() {
+//        return new ApiKey("JWT", "Authorization", "header");
+//    }
+//
+//    private SecurityContext securityContext() {
+//        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+//    }
 
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");

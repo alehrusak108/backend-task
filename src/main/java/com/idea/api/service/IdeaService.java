@@ -2,12 +2,16 @@ package com.idea.api.service;
 
 import com.idea.api.dto.CreateIdeaRequest;
 import com.idea.api.dto.IdeaDto;
+import com.idea.api.dto.IdeaLikeDto;
 import com.idea.api.dto.UpdateIdeaRequest;
+import com.idea.api.mapper.IdeaLikeMapper;
 import com.idea.api.mapper.IdeaMapper;
 import com.idea.api.model.IdeaEntity;
 import com.idea.api.model.IdeaLikeEntity;
+import com.idea.api.model.UserEntity;
 import com.idea.api.repository.IdeaLikeRepository;
 import com.idea.api.repository.IdeaRepository;
+import com.idea.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -23,7 +27,11 @@ public class IdeaService {
 
     private final IdeaMapper ideaMapper;
     private final IdeaRepository ideaRepository;
+
+    private final IdeaLikeMapper ideaLikeMapper;
     private final IdeaLikeRepository ideaLikeRepository;
+
+    private final UserRepository userRepository;
 
     private final AmazonS3Service amazonS3Service;
 
@@ -35,8 +43,8 @@ public class IdeaService {
 
     @Transactional(readOnly = true)
     public Page<IdeaDto> findByCategory(String category, Pageable pageable) {
-        Page<IdeaEntity> ideaEntities = ideaRepository.findByCategoryLikeOrderByUpdatedAtDesc(category, pageable);
-        return ideaMapper.toIdeaDtoPage(ideaEntities);
+        return ideaRepository.findByCategoryContainsIgnoreCaseOrderByUpdatedAtDesc(category, pageable)
+                .map(ideaMapper::toIdeaDto);
     }
 
     @Transactional
@@ -52,12 +60,16 @@ public class IdeaService {
     }
 
     @Transactional
-    public IdeaLikeEntity saveIdeaLike(Long ideaId, Long likeInitiatorId) {
-        // validate
+    public IdeaLikeDto saveIdeaLike(Long ideaId, Long likeInitiatorId) {
+        IdeaEntity ideaEntity = ideaRepository.findByIdThrows(ideaId);
+        UserEntity userEntity = userRepository.findByIdThrows(likeInitiatorId);
+
         IdeaLikeEntity ideaLikeEntity = new IdeaLikeEntity();
-        ideaLikeEntity.setIdeaId(ideaId);
-        ideaLikeEntity.setUserId(likeInitiatorId);
-        return ideaLikeRepository.save(ideaLikeEntity);
+        ideaLikeEntity.setLikedIdea(ideaEntity);
+        ideaLikeEntity.setUserLiked(userEntity);
+        IdeaLikeEntity savedIdeaLike = ideaLikeRepository.save(ideaLikeEntity);
+
+        return ideaLikeMapper.toIdeaLikeDto(savedIdeaLike);
     }
 
     @Transactional

@@ -7,7 +7,6 @@ import com.idea.api.model.IdeaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.data.domain.Page;
 
 @Mapper(uses = IdeaLikeMapper.class, componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface IdeaMapper {
@@ -15,12 +14,13 @@ public interface IdeaMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) // this is set by the ORM framework
+    @Mapping(target = "likes", ignore = true)
     IdeaEntity toIdeaEntity(CreateIdeaRequest createIdeaRequest);
 
+    @Mapping(target = "likes", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) // this is set by the ORM framework
     IdeaEntity toIdeaEntity(UpdateIdeaRequest updateIdeaRequest);
 
     IdeaDto toIdeaDto(IdeaEntity ideaEntity);
-    Page<IdeaDto> toIdeaDtoPage(Page<IdeaEntity> ideaEntity);
 }

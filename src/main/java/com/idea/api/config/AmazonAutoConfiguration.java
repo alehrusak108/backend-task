@@ -8,19 +8,18 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
-@EnableConfigurationProperties(AmazonProperties.class)
 public class AmazonAutoConfiguration {
 
-    @Bean
-    public S3Client s3Client(AmazonProperties amazonProperties) {
-        return S3Client
-                .builder()
-                .region(Region.of(amazonProperties.getRegion()))
-                .credentialsProvider(() ->
-                        AwsBasicCredentials.create(
-                                amazonProperties.getAwsAccessKeyId(),
-                                amazonProperties.getAwsSecretKey()
-                        ))
-                .build();
-    }
+//    @Bean
+//    public S3Client s3Client(AmazonProperties amazonProperties) {
+//        return S3Client
+//                .builder()
+//                .region(Region.of(amazonProperties.getRegion()))
+//                .credentialsProvider(() ->
+//                        AwsBasicCredentials.create(
+//                                amazonProperties.getAwsAccessKeyId(),
+//                                amazonProperties.getAwsSecretKey()
+//                        ))
+//                .build();
+//    }
 }

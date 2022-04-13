@@ -12,14 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -49,8 +50,7 @@ public class IdeaEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idea_id", nullable = false)
+    @OneToMany(mappedBy = "likedIdea", orphanRemoval = true)
     private Set<IdeaLikeEntity> likes;
 
     @CreationTimestamp
@@ -58,6 +58,6 @@ public class IdeaEntity {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "update_at", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

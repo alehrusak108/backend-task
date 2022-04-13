@@ -2,12 +2,11 @@ package com.idea.api.web.rest;
 
 import com.idea.api.dto.CreateIdeaRequest;
 import com.idea.api.dto.IdeaDto;
-import com.idea.api.dto.LikeIdeaRequest;
+import com.idea.api.dto.IdeaLikeDto;
 import com.idea.api.dto.UpdateIdeaRequest;
 import com.idea.api.model.IdeaEntity;
-import com.idea.api.model.IdeaLikeEntity;
 import com.idea.api.service.IdeaService;
-import com.idea.api.web.util.MultipartFileUtils;
+import com.idea.api.util.MultipartFileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -66,12 +65,11 @@ public class IdeaController {
     }
 
     @PostMapping(value = "/{ideaId}/like")
-    public ResponseEntity<IdeaLikeEntity> likeIdea(@PathVariable("ideaId") Long ideaId,
-                                                   @RequestParam("likeInitiatorId") Long likeInitiatorId) {
-        // validator
+    public ResponseEntity<IdeaLikeDto> likeIdea(@PathVariable("ideaId") Long ideaId,
+                                                @RequestParam("likeInitiatorId") Long likeInitiatorId) {
         log.info("REST request to Like an Idea. Idea {}, Like Initiator {}", ideaId, likeInitiatorId);
-        IdeaLikeEntity ideaLikeEntity = ideaService.saveIdeaLike(ideaId, likeInitiatorId);
-        return ResponseEntity.ok(ideaLikeEntity);
+        IdeaLikeDto ideaLikeDto = ideaService.saveIdeaLike(ideaId, likeInitiatorId);
+        return ResponseEntity.ok(ideaLikeDto);
     }
 
     @PostMapping(value = "/{ideaId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
