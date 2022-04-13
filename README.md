@@ -28,5 +28,12 @@ even better if we customize the description of RestControllers via Swagger annot
 possible synchronous calls of an API and how do methods work together. For example, when User creates an Idea, 
 a frontend must send two synchronous requests: first to upload Idea data, and then to upload an Idea image. 
 Also backend and frontend might discuss the process of JWT token refresh.
+
+Please, consider this application more as an example of possible solution. Not all implemented functionality 
+was well tested and not all the bugs are fixed at this moment. Also, I did not write tests here as soon as it can require 
+some more time to have the API fully covered with test. The testing strategy may be the following: service layer 
+of an application must be covered by Unit Tests using JUnit and Mockito. Then we can use SpringBootTest to write 
+an integration tests which will have an embedded in-memory PostgreSQL database and data initialization/cleanup methods
+for each test. RestControllers can be the subject of these integration tests using MockMvc.  
     
          
