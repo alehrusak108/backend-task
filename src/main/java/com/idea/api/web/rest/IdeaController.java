@@ -7,6 +7,9 @@ import com.idea.api.dto.UpdateIdeaRequest;
 import com.idea.api.model.IdeaEntity;
 import com.idea.api.service.IdeaService;
 import com.idea.api.util.MultipartFileUtils;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -42,23 +45,22 @@ public class IdeaController {
 
     @GetMapping
     public Page<IdeaDto> retrieveByCategory(@RequestParam("category") String category,
-                                            @RequestParam int page,
-                                            @RequestParam int pageSize) {
+                                            @RequestParam @Min(0) int page,
+                                            @RequestParam @Max(20) int pageSize) {
+
         log.info("REST request to retrieve Ideas by Category {}", category);
         return ideaService.findByCategory(category, PageRequest.of(page, pageSize));
     }
 
     @PostMapping
-    public ResponseEntity<IdeaEntity> createIdea(@RequestBody CreateIdeaRequest createIdeaRequest) {
-        // validator
+    public ResponseEntity<IdeaEntity> createIdea(@Valid @RequestBody CreateIdeaRequest createIdeaRequest) {
         log.info("REST request to create an Idea: {}", createIdeaRequest);
         IdeaEntity createdIdea = ideaService.createIdea(createIdeaRequest);
         return ResponseEntity.ok(createdIdea);
     }
 
     @PutMapping(value = "/{ideaId}")
-    public ResponseEntity<IdeaEntity> updateIdea(@RequestBody UpdateIdeaRequest updateIdeaRequest) {
-        // validator
+    public ResponseEntity<IdeaEntity> updateIdea(@Valid @RequestBody UpdateIdeaRequest updateIdeaRequest) {
         log.info("REST request to update an Idea: {}", updateIdeaRequest);
         IdeaEntity updatedIdea = ideaService.updateIdea(updateIdeaRequest);
         return ResponseEntity.ok(updatedIdea);
@@ -67,6 +69,7 @@ public class IdeaController {
     @PostMapping(value = "/{ideaId}/like")
     public ResponseEntity<IdeaLikeDto> likeIdea(@PathVariable("ideaId") Long ideaId,
                                                 @RequestParam("likeInitiatorId") Long likeInitiatorId) {
+
         log.info("REST request to Like an Idea. Idea {}, Like Initiator {}", ideaId, likeInitiatorId);
         IdeaLikeDto ideaLikeDto = ideaService.saveIdeaLike(ideaId, likeInitiatorId);
         return ResponseEntity.ok(ideaLikeDto);
@@ -75,9 +78,10 @@ public class IdeaController {
     @PostMapping(value = "/{ideaId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<IdeaEntity> uploadIdeaImage(@PathVariable("ideaId") Long ideaId,
                                                       @RequestPart("image") MultipartFile image) {
-        log.info("REST request to upload Image (size = {}) for Idea {}", image.getSize(), ideaId);
 
-        // Content type may be resolved dynamically by using specific utilities to verify that image matches
+        log.info("REST request to upload Image (size = {}) for Idea {}", image.getSize(), ideaId);
+        // Content type may be resolved dynamically by using specific utilities
+        // to verify that image has acceptable content type
         ContentType contentType = ContentType.IMAGE_JPEG;
         byte[] imageBytes = MultipartFileUtils.retrieveMultipartFileBytes(image);
         IdeaEntity updatedIdea = ideaService.uploadAndAssociateImageWithIdea(ideaId, imageBytes, contentType);

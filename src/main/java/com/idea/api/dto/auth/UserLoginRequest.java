@@ -1,24 +1,20 @@
-package com.idea.api.dto;
+package com.idea.api.dto.auth;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CreateIdeaRequest {
-
-    @NotNull
-    private Long ownerId;
+@NoArgsConstructor
+public class UserLoginRequest {
 
     @NotBlank
     @Size(max = 50)
-    private String category;
+    private String login;
 
     @NotBlank
-    private String description;
+    private String password;
 }

@@ -2,9 +2,9 @@ create table m_idea
 (
     id                  serial              primary key,
     owner_id            bigint              not null,
-    category            varchar(100)        not null,
+    category            varchar(50)         not null,
     description         varchar             not null,
-    image_url           varchar             not null,
+    image_url           varchar,
     created_at          timestamp           not null    default current_timestamp,
     updated_at          timestamp           not null    default current_timestamp,
     constraint m_idea_user_owner_id_fk foreign key (owner_id) references m_user (id)

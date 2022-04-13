@@ -1,14 +1,19 @@
 package com.idea.api.dto.auth;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class UserLoginResponse {
 
+    private String token;
+    private Long userId;
     private String login;
-    private String password;
+    private List<String> roles;
 }

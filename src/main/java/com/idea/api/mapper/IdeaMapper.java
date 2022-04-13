@@ -15,11 +15,13 @@ public interface IdeaMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) // this is set by the ORM framework
     @Mapping(target = "likes", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true)
     IdeaEntity toIdeaEntity(CreateIdeaRequest createIdeaRequest);
 
     @Mapping(target = "likes", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true) // this is set by the ORM framework
+    @Mapping(target = "imageUrl", ignore = true)
     IdeaEntity toIdeaEntity(UpdateIdeaRequest updateIdeaRequest);
 
     IdeaDto toIdeaDto(IdeaEntity ideaEntity);

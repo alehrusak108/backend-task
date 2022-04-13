@@ -1,7 +1,7 @@
 package com.idea.api.security;
 
 import com.idea.api.dto.auth.JWTAuthenticationResult;
-import com.idea.api.dto.auth.LoginRequest;
+import com.idea.api.dto.auth.UserLoginRequest;
 import com.idea.api.security.token.JWTHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class JWTAuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     private final JWTHelper jwtHelper;
 
-    public JWTAuthenticationResult authenticateWithJWT(LoginRequest loginRequest) {
+    public JWTAuthenticationResult authenticate(UserLoginRequest userLoginRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthentication =
-                new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword());
+                new UsernamePasswordAuthenticationToken(userLoginRequest.getLogin(), userLoginRequest.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);

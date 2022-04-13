@@ -16,6 +16,9 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+/**
+ * This is a stub service put here just for an example of how AWS S3 image upload can work.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
