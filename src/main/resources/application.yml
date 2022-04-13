@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/idea_database
+    username: postgres
+    password: root
+    hikari:
+      auto-commit: false
+      minimum-idle: 0
+      maximum-pool-size: 10
+      data-source-properties:
+        ApplicationName: idea-api
+        socketTimeout: 10
+        connectTimeout: 5
+  jpa:
+    open-in-view: false
+    database: postgresql
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+    show-sql: false
+
+server:
+  port: 8080
+
+# For enabling metrics export by Spring Boot Actuator into Prometheus if configured
+management:
+  endpoint.metrics.enabled: true
+  endpoints.web.exposure.include: "*"
+  endpoint.prometheus.enabled: true
+  metrics.export.prometheus.enabled: true
+  metrics.distribution.percentiles-histogram.http: true
