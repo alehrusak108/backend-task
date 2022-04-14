@@ -25,9 +25,9 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 public class AmazonS3Service {
 
     private final AmazonProperties amazonProperties;
-//    private final S3Client s3Client;
+    private final S3Client s3Client;
 
-    // metrics
+    // prometheus metrics must be collected here
     public String uploadImage(String domainObjectId, byte[] imageBytes, ContentType contentType) {
         String imageKey = generateImageKey(domainObjectId);
         doUploadImage(imageBytes, imageKey, contentType);
@@ -35,22 +35,34 @@ public class AmazonS3Service {
     }
 
     public void doUploadImage(byte[] imageBytes, String imageKey, ContentType contentType) {
-//        s3Client.putObject(
-//                PutObjectRequest.builder()
-//                        .bucket(amazonProperties.getBucket())
-//                        .contentType(contentType.toString())
-//                        .contentLength((long) imageBytes.length)
-//                        .acl(ObjectCannedACL.PUBLIC_READ)
-//                        .key(imageKey)
-//                        .build(),
-//                RequestBody.fromBytes(imageBytes)
-//        );
+        s3Client.putObject(
+                PutObjectRequest.builder()
+                        .bucket(amazonProperties.getBucket())
+                        .contentType(contentType.toString())
+                        .contentLength((long) imageBytes.length)
+                        .acl(ObjectCannedACL.PUBLIC_READ)
+                        .key(imageKey)
+                        .build(),
+                RequestBody.fromBytes(imageBytes)
+        );
     }
 
     public byte[] downloadIdeaImage(String pathToIdeaImage) throws IOException {
         try (var inputStream = new URL(pathToIdeaImage).openStream()) {
             return IOUtils.toByteArray(inputStream);
         }
+    }
+
+    public void deleteFileByUrl(String url) {
+        deleteFile(new AmazonS3URI(url).getKey());
+    }
+
+    public void deleteFile(String fileKey) {
+        s3Client.deleteObject(DeleteObjectRequest
+                .builder()
+                .bucket(amazonProperties.getBucket())
+                .key(fileKey)
+                .build());
     }
 
     public String generateImageKey(String ideaId) {
@@ -60,17 +72,5 @@ public class AmazonS3Service {
 
     public String generateImageLink(String imageKey) {
         return String.format("%s/%s/%s", amazonProperties.getServerURL(), amazonProperties.getBucket(), imageKey);
-    }
-
-    public void deleteFileByUrl(String url) {
-        deleteFile(new AmazonS3URI(url).getKey());
-    }
-
-    public void deleteFile(String fileKey) {
-//        s3Client.deleteObject(DeleteObjectRequest
-//                .builder()
-//                .bucket(amazonProperties.getBucket())
-//                .key(fileKey)
-//                .build());
     }
 }

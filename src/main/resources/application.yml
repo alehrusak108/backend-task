@@ -21,9 +21,6 @@ spring:
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
     show-sql: false
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
 
 server:
   port: 8080

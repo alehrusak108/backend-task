@@ -1,4 +1,4 @@
-package com.idea.api.dto;
+package com.idea.api.dto.request;
 
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

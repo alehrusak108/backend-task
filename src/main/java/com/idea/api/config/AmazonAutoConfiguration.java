@@ -10,16 +10,17 @@ import software.amazon.awssdk.services.s3.S3Client;
 @Configuration
 public class AmazonAutoConfiguration {
 
-//    @Bean
-//    public S3Client s3Client(AmazonProperties amazonProperties) {
-//        return S3Client
-//                .builder()
-//                .region(Region.of(amazonProperties.getRegion()))
-//                .credentialsProvider(() ->
-//                        AwsBasicCredentials.create(
-//                                amazonProperties.getAwsAccessKeyId(),
-//                                amazonProperties.getAwsSecretKey()
-//                        ))
-//                .build();
-//    }
+    @Bean
+    public S3Client s3Client(AmazonProperties amazonProperties) {
+        return S3Client
+                .builder()
+                .region(Region.of(amazonProperties.getRegion()))
+                .credentialsProvider(() ->
+                        // Stub properties used here (see application.yml)
+                        AwsBasicCredentials.create(
+                                amazonProperties.getAwsAccessKeyId(),
+                                amazonProperties.getAwsSecretKey()
+                        ))
+                .build();
+    }
 }

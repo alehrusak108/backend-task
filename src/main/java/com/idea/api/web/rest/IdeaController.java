@@ -1,9 +1,9 @@
 package com.idea.api.web.rest;
 
-import com.idea.api.dto.CreateIdeaRequest;
+import com.idea.api.dto.request.CreateIdeaRequest;
 import com.idea.api.dto.IdeaDto;
 import com.idea.api.dto.IdeaLikeDto;
-import com.idea.api.dto.UpdateIdeaRequest;
+import com.idea.api.dto.request.UpdateIdeaRequest;
 import com.idea.api.model.IdeaEntity;
 import com.idea.api.service.IdeaService;
 import com.idea.api.util.MultipartFileUtils;

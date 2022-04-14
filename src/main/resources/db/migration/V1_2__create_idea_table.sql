@@ -10,9 +10,8 @@ create table m_idea
     constraint m_idea_user_owner_id_fk foreign key (owner_id) references m_user (id)
 );
 
--- to improve performance search we should create several indexes
 create unique index m_idea_user_id_category_idx on m_idea (owner_id, category);
-create index m_idea_updated_at_idx on m_idea (created_at);
+create index m_idea_updated_at_idx on m_idea (updated_at);
 
 create table user_idea_like
 (

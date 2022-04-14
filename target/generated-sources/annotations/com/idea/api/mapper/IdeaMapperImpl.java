@@ -1,9 +1,9 @@
 package com.idea.api.mapper;
 
-import com.idea.api.dto.CreateIdeaRequest;
 import com.idea.api.dto.IdeaDto;
 import com.idea.api.dto.IdeaLikeDto;
-import com.idea.api.dto.UpdateIdeaRequest;
+import com.idea.api.dto.request.CreateIdeaRequest;
+import com.idea.api.dto.request.UpdateIdeaRequest;
 import com.idea.api.model.IdeaEntity;
 import com.idea.api.model.IdeaLikeEntity;
 import java.util.HashSet;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-14T00:56:58+0300",
+    date = "2022-04-14T11:20:37+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @Component

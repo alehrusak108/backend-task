@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "amazon")
 public class AmazonProperties {
 
+    // Stub properties used here (see application.yml)
     private String serverURL;
     private String awsAccessKeyId;
     private String awsSecretKey;

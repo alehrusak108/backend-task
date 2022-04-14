@@ -1,8 +1,8 @@
 package com.idea.api.mapper;
 
-import com.idea.api.dto.CreateIdeaRequest;
+import com.idea.api.dto.request.CreateIdeaRequest;
 import com.idea.api.dto.IdeaDto;
-import com.idea.api.dto.UpdateIdeaRequest;
+import com.idea.api.dto.request.UpdateIdeaRequest;
 import com.idea.api.model.IdeaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
